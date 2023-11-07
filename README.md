@@ -4,6 +4,7 @@ Task Description: Install a Linux distribution Ubuntu version 22.04 and become f
 ### Task Submission :
 * 20 Linux Commnads Learned
 * Ubuntu 22.04 Installed
+* What is Command Line
 * No Virtual Machine
 * Shell Scripts
 * Piping
