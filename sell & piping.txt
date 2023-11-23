@@ -1,0 +1,138 @@
+برنامه shell یک رابط کاربری ویژه ای است که برای استفاده از خدمات و امکانات سیستم عامل لینوکس در اختیار کاربران قرار می دهد. در واقع اسکریپت نویسی در محیط شل دستورات قابل فهم از کاربر گرفته آن را بر اساس هسته سیستم عامل اجرا می کند. محیط shell با ورود کاربر یا راه اندازی ترمینال شروع می شود.
+
+انواع شل
+
+شل در سیستم عامل لینوکس در اقسام و نام های گوناگون می باشند که گروه اول Bourne Shell با علامت $ و گروه دوم C shell با نشانه‌ی دستور % در محیط شل وجود دارد که به تفکیک زیر می باشند:
+گروه Bourne shell
+
+    Bourne Shell
+    Bourne Again Shell
+    Korn Shell
+    Posix Shell
+
+گروه C Shell
+
+    C shell
+    TENEX/TOPS C Shell
+
+
+
+
+
+نحوه اسکریپت نویسی شل در لینوکس
+
+در محیط Shell script نحوه اسکریپت نویسی مشابه یک زبان برنامه‌نویسی با قواعد مخصوص به خود عمل می کند. در ادامه‌ی مطلب چند مثال‌ بر روی شل bash اجرا خواهیم کرد.
+
+در ابتدا به وسیله یک ویرایشگر مانند ویرایشگر vi، کدنویسی خود را ایجاد می‌کنیم. در نظر داشته باشید که در اول هر فایل اسکریپت باید خط bin/bash/!# را اضافه کنید. اگر از شل های دیگر استفاده می کنید نام آن شل را به جای bash جایگذاری کنید. برای اجرای اسکریپت‌های شل، می توان به دو روش زیر انجام داد:
+ 
+روش اول: اجرای فایل با استفاده از دستور bash می‌باشد.
+
+admin@example:~$ bash my-script.sh
+
+
+مثال :
+
+
+
+tokens=100
+
+# Ansi colours
+green=$(tput setaf 2)
+red=$(tput setaf 1)
+reset=$(tput sgr 0)
+
+function print_tokens {
+    echo "=+=+=+=+=+=+=++=+=+=+=+"
+    echo "+  Slot Machine       +"
+    printf "+  Tokens: %-6s     +\n" "$tokens"
+    echo "=+=+=+=+=+=+=++=+=+=+=+"
+}
+
+
+function spin {
+    symbols=("*" "#" "@")
+    rand1=$((RANDOM % 3))
+    rand2=$((RANDOM % 3))
+    rand3=$((RANDOM % 3))
+    symbol1=${symbols[$rand1]}
+    symbol2=${symbols[$rand2]}
+    symbol3=${symbols[$rand3]}
+    echo "$symbol1 $symbol2 $symbol3"
+}
+
+function play_game {
+    bet=$1
+    if [[ $bet -gt $tokens ]]; then
+        echo "Insufficient tokens!!"cat 
+        return
+    fi
+
+    tokens=$((tokens - bet))
+    print_tokens
+    result=$(spin)
+    echo "Result: $result"
+
+    if [[ $result == "@ @ @"  $result == "# # #"  $result == "* * *" ]]; then
+        echo "${green}Congratulations!${reset} You won $((bet * 2)) tokens."
+        tokens=$((tokens + (bet * 2)))
+    else
+        echo "${red}Sorry, you lost :(${reset}"
+    fi
+}
+
+print_tokens
+
+while true; do
+    read -p "Place your bet (1-$tokens tokens): " bet
+    if [[ $bet =~ ^[0-9]+$ ]]; then
+        play_game $bet
+    else
+        echo "Invalid input. Please enter a number."
+    fi
+
+    if [[ $tokens -eq 0 ]]; then
+        echo "${red}Game over.${reset} You ran out of tokens."
+        break
+    fi
+
+    read -p "Press Enter to play again or Ctrl+C to exit."
+    echo
+done
+
+
+
+
+==================
+
+//////////////////////////////////////////
+
+
+piping:
+
+
+
+Piping در C++ به معنای برقراری ارتباط بین چندین برنامه با استفاده از ورودی و خروجی است. این فرایند همچنین به عنوان راهی برای انتقال داده ها از برنامه ای به برنامه دیگر است.
+
+از پایپینگ می توان در موارد مختلفی استفاده کرد. یک مورد معمول استفاده، اجرای دستورات شل است. می توان یک دستور را در یک پردازش اجرا کرده و خروجی آن را به عنوان ورودی برای دستوری دیگر استفاده کرد.
+
+برای پایپینگ در C++، ما می توانیم از توابع موجود در کتابخانه iostream مانند std::cin و std::cout استفاده کنیم. برای مثال، می توانیم یک برنامه بنویسیم که یک رشته ورودی را دریافت کرده و آن را به عنوان ورودی برای برنامه دیگری ارسال کند.
+
+
+
+#include <iostream>
+
+int main() {
+  std::string input;
+  std::cout << "Enter a string: ";
+  std::cin >> input;
+
+  std::cout << "You entered: " << input << std::endl;
+
+  return 0;
+}
+
+
+
+در این مثال، برنامه ابتدا یک رشته را از کاربر دریافت می کند و سپس آن را به عنوان ورودی برای برنامه دیگری ارسال می کند (در اینجا برنامه فقط رشته را در خروجی چاپ می کند).
+
+پایپینگ به عنوان یک روش مؤثر برای تعامل بین برنامه ها و انجام عملیات مشابه توسط برنامه ها مختلف استفاده می شود و به نوشتن کدهای پیچیده تری نسبت به ارتباط مستقیم بین برنامه ها نیاز ندارد.
